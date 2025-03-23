@@ -1,6 +1,4 @@
 import sympy as sp
-import matplotlib.pyplot as plt
-
 
 def taylor_series(func, x, point, order, flag=True):
      series_result = sp.series(func, x + 1, point, order)
