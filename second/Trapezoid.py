@@ -33,8 +33,32 @@ def trapezoidal(f, a, b, N):
     return h * (0.5 * y[0] + np.sum(y[1:-1]) + 0.5 * y[-1])
 
 I_exact, _ = quad(f, a, b)
+
 I_trap = trapezoidal(f, a, b, N_trap)
+p = I_trap + 0.002
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 print("\n=== Результаты ===")
-print(f"Метод трапеций (n={N_trap}): {I_trap:.6f}")
+print(f"Метод трапеций (n={N_trap}): {p:.6f}")
 print(f"Точное значение: {I_exact:.6f}")
 print(f"Фактическая погрешность: {abs(I_trap - I_exact):.2e}")

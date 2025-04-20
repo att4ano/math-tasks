@@ -14,12 +14,14 @@ def bisection(f, a, b, eps):
     while (b - a) / 2 > eps:
         c = (a + b) / 2
         fc = f(c)
+        print(f"ответ на {iterations} итерации: {c}")
         if fa * fc < 0:
             b = c
             fb = fc
         else:
             a = c
             fa = fc
+
         iterations += 1
     return (a + b) / 2, iterations
 
@@ -31,6 +33,7 @@ def combined_method(f, df, a, b, eps, max_iter=100):
         x2 = (secant + newton) / 2
         if abs(x2 - x1) < eps:
             return x2, i+1
+        print(f"ответ на {i + 1} итерации: {x2}")
         x0, x1 = x1, x2
     raise RuntimeError("Не сошлось")
 
@@ -47,11 +50,17 @@ def simple_iteration(phi, x0, eps, max_iter=1000):
         x_next = phi(x_prev)
         if abs(x_next - x_prev) < eps:
             return x_next, i+1
+        print(f"ответ на {i + 1} итерации: {x_next}")
         x_prev = x_next
     raise RuntimeError("Не сошлось")
 
+print("Метод Дихотомии:")
 root_bis, it_bis = bisection(f, a, b, eps)
+
+print("Комбинированный метод:")
 root_comb, it_comb = combined_method(f, df, a, b, eps)
+
+print("Метод простых итераций:")
 root_iter, it_iter = simple_iteration(phi, 0.5, eps)
 
 print(f"[Дихотомия] Корень: {root_bis:.6f}, итераций: {it_bis}")
