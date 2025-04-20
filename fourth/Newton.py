@@ -41,7 +41,7 @@ def delta_manual(x, y):
     delta_x = (f1 - b * delta_y) / a
     return np.array([delta_x, delta_y])
 
-def newton_manual_full(x0, y0, tol=1e-4, max_iter=50):
+def newton_manual_full(x0, y0, tol=1e-3, max_iter=50):
     x, y = x0, y0
     for i in range(max_iter):
         delta = delta_manual(x, y)
