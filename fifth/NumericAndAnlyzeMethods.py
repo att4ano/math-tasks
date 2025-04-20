@@ -2,19 +2,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 
-
-# Определение функции дифференциального уравнения
 def f(x, y):
     return x * y + 0.1 * y ** 2
 
-
-# Начальные условия
 x0 = 0
 y0 = 0.4
 x_end = 1
 
-
-# 1. Метод Эйлера
 def euler_method(h):
     x = np.arange(x0, x_end + h, h)
     y = np.zeros(len(x))
@@ -25,8 +19,6 @@ def euler_method(h):
 
     return x, y
 
-
-# 2. Метод Рунге-Кутты 4-го порядка
 def runge_kutta_method(h):
     x = np.arange(x0, x_end + h, h)
     y = np.zeros(len(x))
@@ -42,10 +34,7 @@ def runge_kutta_method(h):
 
     return x, y
 
-
-# 3. Метод степенных рядов (n=4)
 def power_series_method():
-    # Вычисляем коэффициенты разложения
     a0 = y0
     a1 = f(x0, a0)  # y'(0) = f(0, y(0))
 
@@ -58,7 +47,6 @@ def power_series_method():
     # y'''' = 3y'' + xy''' + 0.2(3y'y'' + yy''')
     a4 = (3 * a2 + x0 * a3 + 0.2 * (3 * a1 * a2 + a0 * a3)) / 24
 
-    # Функция-полином
     def y_approx(x):
         return a0 + a1 * x + a2 * x ** 2 + a3 * x ** 3 + a4 * x ** 4
 
@@ -67,8 +55,6 @@ def power_series_method():
 
     return x, y, [a4, a3, a2, a1, a0]
 
-
-# 4. Метод последовательных приближений (Пикара, n=3)
 def picard_method():
     # Первое приближение y1(x) = y0 + ∫(0.1*y0²)dt от 0 до x
     y1 = lambda x: y0 + 0.1 * y0 ** 2 * x
@@ -85,8 +71,6 @@ def picard_method():
     x = np.linspace(x0, x_end, 100)
     return x, y3(x)
 
-
-# Вычисление всех решений
 x_euler1, y_euler1 = euler_method(0.1)
 x_euler2, y_euler2 = euler_method(0.05)
 x_rk1, y_rk1 = runge_kutta_method(0.1)
@@ -94,10 +78,8 @@ x_rk2, y_rk2 = runge_kutta_method(0.05)
 x_ps, y_ps, coeffs = power_series_method()
 x_picard, y_picard = picard_method()
 
-# Распаковываем коэффициенты степенного ряда
 a4, a3, a2, a1, a0 = coeffs
 
-# Оценка погрешностей (сравнение с Рунге-Кутта h=0.05 как эталоном)
 rk_ref = interp1d(x_rk2, y_rk2, kind='cubic', fill_value="extrapolate")
 
 
@@ -116,7 +98,6 @@ calculate_error(x_rk1, y_rk1, "Рунге-Кутта (h=0.1)")
 calculate_error(x_ps, y_ps, "степенных рядов")
 calculate_error(x_picard, y_picard, "последовательных приближений")
 
-# Построение графиков
 plt.figure(figsize=(12, 8))
 plt.plot(x_euler1, y_euler1, 'o-', markersize=4, label='Метод Эйлера (h=0.1)')
 plt.plot(x_euler2, y_euler2, 'o-', markersize=4, label='Метод Эйлера (h=0.05)')
@@ -132,7 +113,6 @@ plt.grid(True, linestyle='--', alpha=0.7)
 plt.tight_layout()
 plt.show()
 
-# Вывод таблицы значений
 print("\nТаблица значений:")
 print("x\tЭйлер(h=0.1)\tЭйлер(h=0.05)\tРунге-Кутта(h=0.1)\tРунге-Кутта(h=0.05)\tСтеп.ряды\tПосл.прибл.")
 for i in range(len(x_euler1)):
